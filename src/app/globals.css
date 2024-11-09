@@ -13,7 +13,9 @@
     --foreground: #ededed;
     --primary-0: #010101;
 
-    --secondary-0: #4d4d4d;
+    --gray-0: #b6b6b6;
+    --gray-50: #4d4d4d;
+    --gray-100: #6d6d6d;
   }
 }
 

@@ -1,7 +1,8 @@
 import React from "react";
 import { ArrowUpRight } from "lucide-react";
+import Button from "@/components/ui/Button";
 
-const HomePageForm = ({ handleFormSubmit }) => {
+const HomePageForm = ({ handleFormSubmit, disabled }) => {
   return (
     <form className="flex flex-col space-y-4" onSubmit={handleFormSubmit}>
       <label htmlFor="email" className="font-semibold">
@@ -14,13 +15,13 @@ const HomePageForm = ({ handleFormSubmit }) => {
         placeholder="Enter email address"
         className="p-3 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-green-500"
       />
-      <button
-        type="submit"
-        className="flex flex-row items-center justify-between space-x-2 p-3 bg-lime-500 text-black font-bold rounded-2xl hover:bg-lime-600 px-6"
-      >
-        <strong>Start Survey</strong>
-        <ArrowUpRight size={15} strokeWidth={5} className="ml-2" />
-      </button>
+      <Button
+        text="Start Survey"
+        variant={disabled ? disabled : "lime"}
+        rightIcon={<ArrowUpRight size={15} strokeWidth={5} />}
+        backgroundColor={"lime-500"}
+        disabled={false}
+      />
     </form>
   );
 };

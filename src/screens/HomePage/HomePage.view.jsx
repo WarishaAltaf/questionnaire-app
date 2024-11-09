@@ -11,10 +11,11 @@ export const HomePageView = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted!");
+    router.push("/question1");
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-r from-secondary-0 to-primary-0 text-white p-8">
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-50 to-primary-0 text-white p-8">
       <div className="flex flex-col md:flex-row max-w-md md:max-w-5xl w-full space-y-8 md:space-y-0">
         <FormLeftSideSection />
 

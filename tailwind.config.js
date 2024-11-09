@@ -14,8 +14,10 @@ module.exports = {
         primary: {
           0: "var(--primary-0)",
         },
-        secondary: {
-          0: "var(--secondary-0)",
+        gray: {
+          0: "var(--gray-0)",
+          50: "var(--gray-50)",
+          100: "var(--gray-100)",
         },
       },
     },
