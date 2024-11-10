@@ -2,13 +2,16 @@
 import FormLeftSideSection from "@/components/modules/sections/formLeftSideSection";
 import Button from "@/components/ui/Button";
 import { ArrowUpLeft, ArrowUpRight } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Question1Form from "@/components/forms/Question1Form";
 import { useRouter } from "next/navigation";
 import QuestionsData from "@/utils/config/questionsData.json";
 import Question2Form from "@/components/forms/Question2.form";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUserDetails } from "@/redux/user/actions";
 
 export const QuestionsView = () => {
+  const { user } = useSelector((state) => state.user);
   const [selectedOption, setSelectedOption] = useState("");
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [error, setError] = useState(null);
@@ -18,8 +21,19 @@ export const QuestionsView = () => {
     price: 0,
   });
   const router = useRouter();
+  const dispatch = useDispatch();
   const selectedQuestionData = QuestionsData[`question${currentQuestion}`];
   const numberOfQuestions = Object.keys(QuestionsData).length;
+
+  useEffect(() => {
+    console.log("user, ", user);
+    if (user.status === "in-progress") {
+      setSelectedOption(user?.progress?.question1);
+    } else if (user.status === "completed") {
+      console.log("user", user?.progress?.question2);
+      // setScores(user?.progress?.question2);
+    }
+  }, []);
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
@@ -38,12 +52,18 @@ export const QuestionsView = () => {
     } else router.back();
   };
 
-  const handleNextPress = () => {
+  const handleNextPress = async () => {
     if (currentQuestion === 1) {
       if (!selectedOption) {
         setError({ option: "Please select one" });
         return;
       }
+      let data = {
+        email: user.email,
+        progressData: { ...user.progress, question1: selectedOption },
+        status: "in-progress",
+      };
+      await handlerReduxData(data);
     } else if (currentQuestion === 2) {
       const newError = ["comfort", "looks", "price"].reduce((acc, key) => {
         if (scores[key] === 0) acc[key] = `Please select a score for ${key}`;
@@ -54,10 +74,31 @@ export const QuestionsView = () => {
         setError(newError);
         return;
       }
-      router.push("/thank-you");
+      let data = {
+        email: user.email,
+        progressData: { ...user.progress, question2: scores },
+        status: "completed",
+      };
+      await handlerReduxData(data);
     }
+  };
+
+  const handlerReduxData = async (data) => {
+    const response = await dispatch(updateUserDetails(data));
+
+    if (response.error) {
+      console.log("Error updating user details", response.error);
+      return;
+    } else {
+      handleNextPage();
+    }
+  };
+
+  const handleNextPage = () => {
     if (currentQuestion < numberOfQuestions) {
       setCurrentQuestion((prev) => prev + 1);
+    } else {
+      router.push("/thank-you");
     }
   };
 

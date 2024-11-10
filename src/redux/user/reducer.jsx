@@ -1,7 +1,7 @@
 "use client";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getUserDetails } from "./actions";
+import { getUserDetails, updateUserDetails } from "./actions";
 
 const initialState = {
   user: {},
@@ -24,6 +24,18 @@ const userSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(getUserDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateUserDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(updateUserDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

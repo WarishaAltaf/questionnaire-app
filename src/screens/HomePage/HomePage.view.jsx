@@ -10,9 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "@/redux/user/actions";
 
 export const HomePageView = () => {
-  const { user } = useSelector((state) => state.user);
+  const { user, error } = useSelector((state) => state.user);
   const [email, setEmail] = React.useState("");
-  const [error, setError] = React.useState("");
+  const [emailError, setError] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -28,15 +28,19 @@ export const HomePageView = () => {
       setError("Please enter a valid email address");
       setIsLoading(false);
     } else {
-      await dispatch(getUserDetails(email));
-      if (user.error) {
-        setError(user.error);
+      const response = await dispatch(getUserDetails(email));
+
+      if (response.error) {
+        setError(error);
         setIsLoading(false);
         return;
+      } else if (response.payload.status === "completed") {
+        setError("");
+        setIsLoading(false);
+        router.push("/thank-you");
       } else {
         setError("");
         setIsLoading(false);
-        console.log("Form submitted!");
         router.push("/questions");
       }
     }
@@ -68,7 +72,7 @@ export const HomePageView = () => {
           <HomePageForm
             handleFormSubmit={handleFormSubmit}
             isLoading={isLoading}
-            error={error}
+            error={emailError}
             value={email}
             onChangeValue={handleEmailChange}
           />

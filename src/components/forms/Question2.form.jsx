@@ -26,7 +26,7 @@ function Question2Form({ scores, handleScoresChange, error }) {
               ))}
             </div>
           </div>
-          {error[option] && (
+          {error && error[option] && (
             <p className="text-red-500 text-sm mt-4 text-start ml-3">
               {error[option]}
             </p>
