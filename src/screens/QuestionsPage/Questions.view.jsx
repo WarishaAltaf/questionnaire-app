@@ -45,6 +45,15 @@ export const QuestionsView = () => {
         return;
       }
     } else if (currentQuestion === 2) {
+      const newError = ["comfort", "looks", "price"].reduce((acc, key) => {
+        if (scores[key] === 0) acc[key] = `Please select a score for ${key}`;
+        return acc;
+      }, {});
+
+      if (Object.keys(newError).length > 0) {
+        setError(newError);
+        return;
+      }
     }
     if (currentQuestion < numberOfQuestions) {
       setCurrentQuestion((prev) => prev + 1);
@@ -55,6 +64,10 @@ export const QuestionsView = () => {
     setScores((prevScores) => ({
       ...prevScores,
       [option]: score + 1,
+    }));
+    setError((prevError) => ({
+      ...prevError,
+      [option]: null,
     }));
   };
 
@@ -84,6 +97,7 @@ export const QuestionsView = () => {
         <Question2Form
           scores={scores}
           handleScoresChange={handleScoresChange}
+          error={error}
         />
       )}
 
