@@ -5,9 +5,10 @@ function Question1Form({
   selectedOption,
   handleOptionChange,
   handleOptionSelect,
+  error,
 }) {
   return (
-    <div>
+    <form>
       <div className="flex flex-row gap-6 items-center justify-center z-10">
         <RadioButtonCard
           option={"Nike Orange"}
@@ -25,10 +26,10 @@ function Question1Form({
           innerDivWidth={"w-32"}
         />
       </div>
-      {selectedOption === null && (
-        <p className="text-red-500 text-sm mt-4">Please select one</p>
+      {error?.option && (
+        <p className="text-red-500 text-sm mt-4 text-center">{error.option}</p>
       )}
-    </div>
+    </form>
   );
 }
 

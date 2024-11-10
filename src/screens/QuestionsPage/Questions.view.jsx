@@ -9,8 +9,9 @@ import QuestionsData from "@/utils/config/questionsData.json";
 import Question2Form from "@/components/forms/Question2.form";
 
 export const QuestionsView = () => {
-  const [selectedOption, setSelectedOption] = useState("Nick Orange");
+  const [selectedOption, setSelectedOption] = useState("");
   const [currentQuestion, setCurrentQuestion] = useState(1);
+  const [error, setError] = useState(null);
   const [scores, setScores] = useState({
     comfort: 0,
     looks: 0,
@@ -22,11 +23,13 @@ export const QuestionsView = () => {
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
+    setError({ option: null });
   };
 
   const handleOptionChange = (event) => {
     const value = event.target.value;
     setSelectedOption(value);
+    setError({ option: null });
   };
 
   const handleBackPress = () => {
@@ -34,8 +37,15 @@ export const QuestionsView = () => {
       setCurrentQuestion((prev) => prev - 1);
     } else router.back();
   };
-  const handleNextPress = (data) => {
-    if (!data) return;
+
+  const handleNextPress = () => {
+    if (currentQuestion === 1) {
+      if (!selectedOption) {
+        setError({ option: "Please select one" });
+        return;
+      }
+    } else if (currentQuestion === 2) {
+    }
     if (currentQuestion < numberOfQuestions) {
       setCurrentQuestion((prev) => prev + 1);
     }
@@ -68,6 +78,7 @@ export const QuestionsView = () => {
           selectedOption={selectedOption}
           handleOptionChange={handleOptionChange}
           handleOptionSelect={handleOptionSelect}
+          error={error}
         />
       ) : (
         <Question2Form
@@ -86,8 +97,7 @@ export const QuestionsView = () => {
         <Button
           onClick={handleNextPress}
           text={selectedQuestionData.nextButtonText}
-          disabled={!selectedOption}
-          variant={selectedOption ? "lime" : "disabled"}
+          variant={currentQuestion === 1 ? "lime" : "white"}
           rightIcon={<ArrowUpRight size={15} strokeWidth={5} />}
         />
       </div>
