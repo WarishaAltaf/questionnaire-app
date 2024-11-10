@@ -54,6 +54,7 @@ export const QuestionsView = () => {
         setError(newError);
         return;
       }
+      router.push("/thank-you");
     }
     if (currentQuestion < numberOfQuestions) {
       setCurrentQuestion((prev) => prev + 1);
