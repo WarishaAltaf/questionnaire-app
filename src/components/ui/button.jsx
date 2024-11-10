@@ -1,4 +1,5 @@
 import React from "react";
+import { ClipLoader } from "react-spinners";
 
 const Button = ({
   text,
@@ -8,6 +9,7 @@ const Button = ({
   variant,
   className,
   onClick,
+  isLoading,
 }) => {
   let classes = "";
   switch (variant) {
@@ -29,13 +31,24 @@ const Button = ({
   return (
     <button
       onClick={onClick}
-      disabled={disabled}
+      disabled={isLoading || disabled}
       type="submit"
       className={`flex flex-row items-center px-3 py-2 md:p-3 justify-between space-x-2 font-bold transition duration-300 rounded-full md:rounded-2xl ${classes} ${className}`}
     >
-      {leftIcon}
-      <strong className="text-sm md:text-base">{text}</strong>
-      {rightIcon}
+      {isLoading && (
+        <ClipLoader
+          color="#fff"
+          size={20}
+          className="self-center text-center mx-auto"
+        />
+      )}
+      {!isLoading && (
+        <>
+          {leftIcon}
+          <strong className="text-sm md:text-base">{text}</strong>
+          {rightIcon}
+        </>
+      )}
     </button>
   );
 };

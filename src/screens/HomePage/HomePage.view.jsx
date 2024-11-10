@@ -5,13 +5,33 @@ import React from "react";
 import HomePageForm from "@/components/forms/HomePage.form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { validateEmail } from "@/lib/validateEmail";
 
 export const HomePageView = () => {
+  const [email, setEmail] = React.useState("");
+  const [error, setError] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted!");
-    router.push("/questions");
+    setIsLoading(true);
+    if (!email) {
+      setError("Please enter your email address");
+      setIsLoading(false);
+      return;
+    } else if (!validateEmail(email)) {
+      setError("Please enter a valid email address");
+      setIsLoading(false);
+    } else {
+      console.log("Form submitted!");
+      router.push("/questions");
+    }
+  };
+
+  const handleEmailChange = (value) => {
+    setEmail(value);
+    setError("");
   };
 
   return (
@@ -32,7 +52,13 @@ export const HomePageView = () => {
             </p>
           </div>
 
-          <HomePageForm handleFormSubmit={handleFormSubmit} />
+          <HomePageForm
+            handleFormSubmit={handleFormSubmit}
+            isLoading={isLoading}
+            error={error}
+            value={email}
+            onChangeValue={handleEmailChange}
+          />
         </section>
       </div>
     </main>
