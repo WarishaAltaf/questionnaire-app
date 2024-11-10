@@ -11,7 +11,7 @@ export const HomePageView = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted!");
-    router.push("/question1");
+    router.push("/questions");
   };
 
   return (
