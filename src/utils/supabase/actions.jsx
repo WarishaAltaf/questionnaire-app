@@ -10,7 +10,7 @@ export const getUserDataByEmail = async (email) => {
       .eq("email", email)
       .single();
 
-    if (error) {
+    if (error && error.code !== "PGRST116") {
       throw error;
     }
 
@@ -23,7 +23,7 @@ export const getUserDataByEmail = async (email) => {
 
 export const addInitialUserData = async (email) => {
   try {
-    const { error } = await supabase.from("user_progress").insert([
+    const { error, data } = await supabase.from("user_progress").insert([
       {
         email: email,
         progress: {},
