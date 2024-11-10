@@ -6,14 +6,18 @@ import HomePageForm from "@/components/forms/HomePage.form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/lib/validateEmail";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetails } from "@/redux/user/actions";
 
 export const HomePageView = () => {
+  const { user } = useSelector((state) => state.user);
   const [email, setEmail] = React.useState("");
   const [error, setError] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     if (!email) {
@@ -24,8 +28,17 @@ export const HomePageView = () => {
       setError("Please enter a valid email address");
       setIsLoading(false);
     } else {
-      console.log("Form submitted!");
-      router.push("/questions");
+      await dispatch(getUserDetails(email));
+      if (user.error) {
+        setError(user.error);
+        setIsLoading(false);
+        return;
+      } else {
+        setError("");
+        setIsLoading(false);
+        console.log("Form submitted!");
+        router.push("/questions");
+      }
     }
   };
 
