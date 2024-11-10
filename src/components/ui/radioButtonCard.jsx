@@ -23,7 +23,7 @@ const RadioButtonCard = ({
       <div
         onClick={() => handleOptionSelect(option)}
         className={`md:w-64 md:h-64 ${
-          innerDivWidth ? innerDivWidth : "w-30"
+          innerDivWidth ?? "w-30"
         } h-36 p-4 bg-gray-100 rounded-3xl flex flex-col items-center justify-center cursor-pointer`}
       >
         <span className="text-white text-md sm:text-lg text-center font-medium mb-4">

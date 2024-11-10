@@ -1,7 +1,7 @@
 import RadioButtonCard from "@/components/ui/radioButtonCard";
 import React from "react";
 
-function QuestionsForm({
+function Question1Form({
   selectedOption,
   handleOptionChange,
   handleOptionSelect,
@@ -32,4 +32,4 @@ function QuestionsForm({
   );
 }
 
-export default QuestionsForm;
+export default Question1Form;

@@ -2,7 +2,7 @@
 
 import FormLeftSideSection from "@/components/modules/sections/formLeftSideSection";
 import React from "react";
-import HomePageForm from "./HomePage.form";
+import HomePageForm from "@/components/forms/HomePage.form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -19,7 +19,7 @@ export const HomePageView = () => {
       <div className="flex flex-col md:flex-row max-w-md md:max-w-5xl w-full space-y-8 md:space-y-0">
         <FormLeftSideSection />
 
-        <div className="w-full md:w-1/2 flex flex-col justify-center p-8 space-y-6 z-10">
+        <section className="w-full md:w-1/2 flex flex-col justify-center p-8 space-y-6 z-10">
           <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-6xl font-bold md:text-start text-center">
             Questionnaire
           </h1>
@@ -33,7 +33,7 @@ export const HomePageView = () => {
           </div>
 
           <HomePageForm handleFormSubmit={handleFormSubmit} />
-        </div>
+        </section>
       </div>
     </main>
   );
