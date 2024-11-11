@@ -8,7 +8,7 @@ export const getUserDataByEmail = async (email) => {
       .from("user_progress")
       .select("status, progress, email")
       .eq("email", email)
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.log("Supabase error fetching user data:", error.message);

@@ -5,6 +5,7 @@ import {
   getUserDataByEmail,
 } from "@/utils/supabase/actions";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const getUserDetails = createAsyncThunk(
   "user/gettUserDetails",
@@ -29,6 +30,16 @@ export const updateUserDetails = createAsyncThunk(
       let data = await addUserProgressData({ email, progressData, status });
       if (data) {
         data = await getUserDataByEmail(email);
+        if (status === "completed") {
+          const response = await axios.post("/api/user/progress", {
+            email,
+            progress: progressData,
+            status,
+          });
+          if (response.status !== 201) {
+            return rejectWithValue("Error saving user progress");
+          }
+        }
       }
       return data;
     } catch (error) {
