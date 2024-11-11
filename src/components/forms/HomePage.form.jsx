@@ -1,6 +1,6 @@
 import React from "react";
 import { ArrowUpRight } from "lucide-react";
-import Button from "@/components/ui/Button";
+import Button from "@/components/ui/button";
 
 const HomePageForm = ({
   handleFormSubmit,
