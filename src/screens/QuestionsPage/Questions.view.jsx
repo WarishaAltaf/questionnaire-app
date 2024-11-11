@@ -1,6 +1,6 @@
 "use client";
 import FormLeftSideSection from "@/components/modules/sections/formLeftSideSection";
-import Button from "@/components/ui/Button";
+import Button from "@/components/ui/button";
 import { ArrowUpLeft, ArrowUpRight } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import Question1Form from "@/components/forms/Question1Form";
