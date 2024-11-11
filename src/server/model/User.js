@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import ProgressSchema from "./ProgressSchema.js";
 
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },

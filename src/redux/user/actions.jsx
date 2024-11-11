@@ -1,4 +1,5 @@
 "use client";
+import { completedProgressAPI } from "@/utils/apis";
 import {
   addInitialUserData,
   addUserProgressData,
@@ -31,7 +32,8 @@ export const updateUserDetails = createAsyncThunk(
       if (data) {
         data = await getUserDataByEmail(email);
         if (status === "completed") {
-          const response = await axios.post("/api/user/progress", {
+          console.log("emai", progressData, status, email);
+          const response = await completedProgressAPI({
             email,
             progress: progressData,
             status,
@@ -43,7 +45,9 @@ export const updateUserDetails = createAsyncThunk(
       }
       return data;
     } catch (error) {
-      return rejectWithValue(error || "An error occurred");
+      return rejectWithValue(
+        error || error?.reponse?.data?.message || "An error occurred"
+      );
     }
   }
 );
