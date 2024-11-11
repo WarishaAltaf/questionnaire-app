@@ -1,3 +1,5 @@
+"use client";
 import { QuestionsView } from "./Questions.view";
+import { withAuth } from "@/utils/auth/withAuth";
 
-export default QuestionsView;
+export default withAuth(QuestionsView);
