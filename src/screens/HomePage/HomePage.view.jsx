@@ -63,8 +63,9 @@ export const HomePageView = () => {
           <div className="p-4 bg-pink-200 text-gray-800 rounded-2xl shadow-lg">
             <h2 className="font-semibold md:font-medium mb-2">Welcome!</h2>
             <p className="text-xs mt-3">
-              We're excited to hear your thoughts, ideas, and insights. Don't
-              worry about right or wrong answers—just speak from the heart.
+              We&apos;re excited to hear your thoughts, ideas, and insights.
+              Don&apos;t worry about right or wrong answers—just speak from the
+              heart.
               {"\n"}Your genuine feedback is invaluable to us!
             </p>
           </div>
