@@ -4,6 +4,15 @@ import User from "@/model/User";
 
 export async function POST(req) {
   try {
+    console.log("first", req);
+    if (!req) {
+      return new NextResponse(
+        JSON.stringify({
+          message: "All fields are required",
+        }),
+        { status: 400 }
+      );
+    }
     await connectDatabase();
     const body = await req.json();
     const { email, progress, status } = body;
@@ -38,8 +47,8 @@ export async function POST(req) {
   } catch (error) {
     console.error("Error saving response:", error);
     return new NextResponse(
-      JSON.stringify({ message: "Invalid JSON or Empty Body" }),
-      { status: 400 }
+      JSON.stringify({ message: "Something went wrong" }),
+      { status: 500 }
     );
   }
 }
